@@ -9,10 +9,13 @@ FROM employee_demographics;
 
 
 SELECT first_name, 
-last_name, 
+last_name,
+age,
 CASE
 	WHEN age <= 30 THEN 'Young'
-END
+    WHEN age BETWEEN 31 and 50 then 'Old'
+    WHEN age >= 50 then 'Practically dead'
+END as 'isYoung'
 FROM employee_demographics;
 
 

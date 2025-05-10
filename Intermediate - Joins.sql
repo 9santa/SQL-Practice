@@ -95,7 +95,7 @@ JOIN employee_salary emp2
 
 -- now we have on other table we can join - let's take a look at it
 SELECT * 
-FROM parks_and_recreation.parks_departments;
+FROM Parks_and_Recreation.parks_departments;
 
 
 SELECT *
