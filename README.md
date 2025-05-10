@@ -1,1 +1,1 @@
-# MySQL-YouTube-Series
+"# SQL-Practice"
