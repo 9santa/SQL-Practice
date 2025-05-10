@@ -32,7 +32,7 @@ LIMIT 3,2;
 SELECT *
 FROM employee_demographics
 ORDER BY age desc;
--- we can see it's Donna - let's try to select her
+-- we can see it's Leslie - let's try to select her
 SELECT *
 FROM employee_demographics
 ORDER BY age desc
@@ -50,9 +50,10 @@ FROM employee_demographics
 GROUP BY gender
 ;
 -- we can use the keyword AS to specify we are using an Alias
-SELECT gender, AVG(age) AS Avg_age
+SELECT gender, AVG(age) AS avg_age
 FROM employee_demographics
 GROUP BY gender
+having avg_age > 40
 ;
 
 -- although we don't actually need it, but it's more explicit which I usually like

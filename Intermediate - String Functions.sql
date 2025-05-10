@@ -8,8 +8,9 @@ FROM bakery.customers;
 SELECT LENGTH('sky');
 
 #Now we can see the length of each name
-SELECT first_name, LENGTH(first_name) 
-FROM employee_demographics;
+SELECT first_name, LENGTH(first_name) as 'length'
+FROM employee_demographics
+order by length;
 
 #Upper will change all the string characters to upper case
 SELECT UPPER('sky');
@@ -24,7 +25,7 @@ SELECT first_name, LOWER(first_name)
 FROM employee_demographics;
 
 #Now if you have values that have white space on the front or end, we can get rid of that white space using TRIM
-SELECT TRIM('sky'   );
+SELECT TRIM('         sky'   );
 
 #Now if we have white space in the middle it doesn't work
 SELECT LTRIM('     I           love          SQL');
@@ -40,8 +41,12 @@ SELECT RTRIM('I love SQL    ');
 #Now we have Left. Left is going to allow us to take a certain amount of strings from the left hand side.
 SELECT LEFT('Alexander', 4);
 
-SELECT first_name, LEFT(first_name,4) 
-FROM employee_demographics;
+SELECT first_name, LEFT(first_name,4) as 'left_4', RIGHT(first_name, 4) as 'right_4',
+SUBSTRING(first_name, 3, 2),
+birth_date,
+SUBSTRING(birth_date, 6, 2) as birth_month
+FROM employee_demographics
+order by birth_month; 
 
 #Right is basically the opposite - taking it starting from the right side
 SELECT RIGHT('Alexander', 6);
@@ -58,7 +63,7 @@ SELECT birth_date, SUBSTRING(birth_date,1,4) as birth_year
 FROM employee_demographics;
 
 #We can also use replace
-SELECT REPLACE(first_name,'a','z')
+SELECT first_name, REPLACE(first_name,'a','z')
 FROM employee_demographics;
 
 #Next we have locate - we have 2 arguments we can use here: we can specify what we are searching for and where to search
@@ -82,5 +87,9 @@ SELECT CONCAT('Alex', 'Freberg');
 
 #Here we can combine the first and the last name columns together
 SELECT CONCAT(first_name, ' ', last_name) AS full_name
+FROM employee_demographics;
+
+SELECT first_name, last_name, age,
+CONCAT(first_name, ' is ', age, ' years old') as name_age
 FROM employee_demographics;
 

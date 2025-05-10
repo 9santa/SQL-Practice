@@ -16,9 +16,9 @@ FROM employee_salary;
 
 -- since we have the same columns we need to specify which table they're coming from
 SELECT *
-FROM employee_demographics
-JOIN employee_salary
-	ON employee_demographics.employee_id = employee_salary.employee_id;
+FROM employee_demographics as dem
+JOIN employee_salary as sal
+	ON dem.employee_id = sal.employee_id;
 
 -- notice Ron Swanson isn't in the results? This is because he doesn't have an employee id in the demographics table. He refused to give his birth date or age or gender
 

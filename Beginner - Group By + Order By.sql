@@ -6,9 +6,14 @@ SELECT *
 FROM employee_demographics;
 
 -- when you use group by  you have to have the same columns you're grouping on in the group by statement
-SELECT gender
+SELECT gender, avg(age), max(age), min(age), count(age)
 FROM employee_demographics
 GROUP BY gender
+;
+
+select *
+from employee_salary
+group by occupation, salary
 ;
 
 
@@ -38,6 +43,14 @@ GROUP BY occupation, salary
 SELECT gender, AVG(age)
 FROM employee_demographics
 GROUP BY gender
+HAVING avg(age) > 40
+;
+
+select occupation, avg(salary)
+from employee_salary
+where occupation like '%manager%'
+group by occupation
+having avg(salary) > 80000
 ;
 
 SELECT gender, MIN(age), MAX(age), COUNT(age),AVG(age)
@@ -57,8 +70,8 @@ GROUP BY gender
 #So let's try it out with our customer table
 #First let's start simple with just ordering by one column
 SELECT *
-FROM customers
-ORDER BY first_name;
+FROM employee_demographics
+ORDER BY gender, age desc;
 
 #You can see that first name is ordered from a - z or Ascending.
 
