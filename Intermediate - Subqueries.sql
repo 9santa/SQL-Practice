@@ -2,8 +2,12 @@
 
 #So subqueries are queries within queries. Let's see how this looks.
 
-SELECT *
-FROM employee_demographics;
+SELECT gender
+FROM employee_demographics
+group by gender;
+
+select *
+from employee_salary;
 
 
 #Now let's say we wanted to look at employees who actually work in the Parks and Rec Department, we could join tables together or we could use a subquery
@@ -31,13 +35,10 @@ WHERE employee_id IN
 
 -- Let's say we want to look at the salaries and compare them to the average salary
 
-SELECT first_name, salary, AVG(salary)
+SELECT *, AVG(salary)
 FROM employee_salary;
 -- if we run this it's not going to work, we are using columns with an aggregate function so we need to use group by
 -- if we do that though we don't exactly get what we want
-SELECT first_name, salary, AVG(salary)
-FROM employee_salary
-GROUP BY first_name, salary;
 
 -- it's giving us the average PER GROUP which we don't want
 -- here's a good use for a subquery
@@ -45,24 +46,42 @@ GROUP BY first_name, salary;
 SELECT first_name, 
 salary, 
 (SELECT AVG(salary) 
-	FROM employee_salary)
+	FROM employee_salary) as avg_salary,
+salary, occupation
 FROM employee_salary;
+
 
 
 -- We can also use it in the FROM Statement
 -- when we use it here it's almost like we are creating a small table we are querying off of
-SELECT *
-FROM (SELECT gender, MIN(age), MAX(age), COUNT(age),AVG(age)
-FROM employee_demographics
-GROUP BY gender) 
-;
--- now this doesn't work because we get an error saying we have to name it
 
-SELECT gender, AVG(Min_age)
-FROM (SELECT gender, MIN(age) Min_age, MAX(age) Max_age, COUNT(age) Count_age ,AVG(age) Avg_age
+SELECT gender, MIN(age), MAX(age), COUNT(age), AVG(age)
+FROM employee_demographics
+group by gender
+having gender = 'female'
+union
+SELECT gender, MIN(age), MAX(age), COUNT(age), AVG(age)
+FROM employee_demographics
+group by gender
+having gender = 'male'
+;
+
+SELECT gender
+FROM employee_demographics
+where gender = 'female'
+;
+
+SELECT AVG(Min_age), avg(max_age)
+FROM (SELECT gender, MIN(age) Min_age, MAX(age) Max_age, COUNT(age) Count_age, AVG(age) Avg_age
 FROM employee_demographics
 GROUP BY gender) AS Agg_Table
-GROUP BY gender
+;
+
+select *
+from
+(SELECT gender, MIN(age) Min_age, MAX(age) Max_age, COUNT(age) Count_age ,AVG(age) Avg_age
+FROM employee_demographics
+GROUP BY gender) AS Agg_Table
 ;
 
 

@@ -36,7 +36,7 @@ WHERE salary > 50000;
 
 -- if we run this query we get our output
 SELECT *
-FROM temp_table_2;
+FROM salary_over_50k;
 
 -- this is the primary way I've used temp tables especially if I'm just querying data and have some complex data I want to put into boxes or these temp tables to use later
 -- it helps me kind of categorize and separate it out

@@ -6,15 +6,16 @@ FROM employee_salary
 WHERE salary >= 60000;
 
 -- Now let's put this into a stored procedure.
+USE Parks_and_Recreation;
 CREATE PROCEDURE large_salaries()
 SELECT *
 FROM employee_salary
-WHERE salary >= 60000;
+WHERE salary >= 50000;
 
 -- Now if we run this it will work and create the stored procedure
 -- we can click refresh and see that it is there
 
--- notice it did not give us an output, that's because we 
+-- notice it did not give us an output, that's because we just created it, but did not call the procedure
 
 -- If we want to call it and use it we can call it by saying:
 CALL large_salaries();
@@ -42,15 +43,16 @@ WHERE salary >= 50000;
 
 -- When we change this delimiter it now reads in everything as one whole unit or query instead of stopping
 -- after the first semi colon
+DROP procedure IF EXISTS `new_procedure`;
 DELIMITER $$
-CREATE PROCEDURE large_salaries2()
+CREATE PROCEDURE large_salaries3()
 BEGIN
 	SELECT *
 	FROM employee_salary
-	WHERE salary >= 60000;
+	WHERE salary >= 50000;
 	SELECT *
 	FROM employee_salary
-	WHERE salary >= 50000;
+	WHERE salary >= 20000;
 END $$
 
 -- now we change the delimiter back after we use it to make it default again
@@ -58,10 +60,20 @@ DELIMITER ;
 
 -- let's refresh to see the SP
 -- now we can run this stored procedure
-CALL large_salaries2();
+CALL large_salaries3();
 
 -- as you can see we have 2 outputs which are the 2 queries we had in our stored procedure
 
+DELIMITER $$
+CREATE PROCEDURE salary_by_id(id_param INT)
+BEGIN
+	SELECT salary
+	FROM employee_salary
+	WHERE employee_id = id;
+END $$
+DELIMITER ;
+
+CALL salary_by_id(3);
 
 
 -- we can also create a stored procedure by right clicking on Stored Procedures and creating one:

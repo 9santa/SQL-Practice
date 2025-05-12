@@ -13,7 +13,7 @@ SELECT * FROM employee_demographics;
 -- so really when we get a new row or data is inserted into the payments table we want a trigger to update the correct invoice 
 -- with the amount that was paid
 -- so let's write this out
-USE parks_and_recreation;
+USE Parks_and_Recreation;
 DELIMITER $$
 
 CREATE TRIGGER employee_insert2
@@ -28,9 +28,9 @@ BEGIN
 -- we want to update our client invoices table
 -- and set the total paid = total_paid (if they had already made some payments) + NEW.amount_paid
 -- NEW says only from the new rows that were inserted. There is also OLD which is rows that were deleted or updated, but for us we want NEW
-    INSERT INTO employee_demographics (employee_id, first_name, last_name) VALUES (NEW.employee_id,NEW.first_name,NEW.last_name);
+    INSERT INTO employee_demographics (employee_id, first_name, last_name)
+    VALUES (NEW.employee_id,NEW.first_name,NEW.last_name);
 END $$
-
 DELIMITER ; 
 
 -- Now let's run it and create it
@@ -66,7 +66,7 @@ WHERE employee_id = 13;
 -- All we have to do is delete them from the demographics table
 
 SELECT * 
-FROM parks_and_recreation.employee_demographics;
+FROM employee_demographics;
 
 SHOW EVENTS;
 
@@ -77,14 +77,16 @@ CREATE EVENT delete_retirees
 ON SCHEDULE EVERY 30 SECOND
 DO BEGIN
 	DELETE
-	FROM parks_and_recreation.employee_demographics
+	FROM employee_demographics
     WHERE age >= 60;
 END $$
-
+DELIMITER ;
 
 -- if we run it again you can see Jerry is now fired -- or I mean retired
 SELECT * 
-FROM parks_and_recreation.employee_demographics;
+FROM employee_demographics;
+
+SHOW VARIABLES LIKE '%EVENT%';
 
 
 

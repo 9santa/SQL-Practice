@@ -11,9 +11,9 @@ FROM employee_demographics
 GROUP BY gender
 ;
 
-select *
+select salary
 from employee_salary
-group by occupation, salary
+group by salary
 ;
 
 
